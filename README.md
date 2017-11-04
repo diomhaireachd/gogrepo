@@ -132,7 +132,7 @@ new GOG folder with clean game directory names and file names as GOG has them na
 
 Requirements
 ------------
-* Python 2.7 (Python 3 support coming soon)
+* Python 3
 * html5lib 0.99999 (https://github.com/html5lib/html5lib-python)
 * html2text 2015.6.21 (https://pypi.python.org/pypi/html2text) (optional, used for prettying up gog game changelog html)
 
