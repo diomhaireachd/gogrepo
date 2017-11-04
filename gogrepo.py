@@ -50,6 +50,7 @@ except ImportError:
     from urllib.request import HTTPCookieProcessor, HTTPError, URLError, build_opener, Request
     from itertools import zip_longest
     from io import StringIO
+    from operator import attrgetter
 
 # python 2 / 3 renames
 try: input = raw_input
@@ -346,6 +347,32 @@ def handle_game_updates(olditem, newitem):
 
     if olditem.serial != newitem.serial:
         info('  -> serial key has changed')
+        
+    # add some info on changes to files
+    ############
+    olditem.downloads.sort(key=attrgetter('name'), reverse=True)
+    newitem.downloads.sort(key=attrgetter('name'), reverse=True)
+    
+    if len(olditem.downloads) != len(newitem.downloads):
+        info('  -> number of game files changed old "{}" -> new "{}"'.format(len(olditem.downloads), len(newitem.downloads)))
+        if olditem.downloads[0].name.startswith('patch') or newitem.downloads[0].name.startswith('patch'):
+            info('  -> game files updated "{}" -> "{}"'.format(olditem.downloads[0].name, newitem.downloads[0].name))
+        else:
+            info('  -> version old "{}" -> new "{}"'.format(olditem.downloads[0].version, newitem.downloads[0].version))
+    else:
+        for i in range(0, len(newitem.downloads)):
+            if olditem.downloads[i].name != newitem.downloads[i].name:
+                info('  -> game files updated "{}" -> "{}"'.format(olditem.downloads[i].name, newitem.downloads[i].name))
+                
+    olditem.extras.sort(key=attrgetter('name'), reverse=True)
+    newitem.extras.sort(key=attrgetter('name'), reverse=True)
+    
+    if len(olditem.extras) != len(newitem.extras):
+        info('  -> number of extra files changed old "{}" -> new "{}"'.format(len(olditem.extras), len(newitem.extras)))
+    else:
+        for i in range(0, len(newitem.extras)):
+            if olditem.extras[i].name != newitem.extras[i].name:
+                info('  -> extras updated "{}" -> "{}"'.format(olditem.extras[i].name, newitem.extras[i].name))
 
 
 def fetch_file_info(d, fetch_md5):
