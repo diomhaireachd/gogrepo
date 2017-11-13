@@ -350,8 +350,11 @@ def handle_game_updates(olditem, newitem):
         
     # add some info on changes to files
     ############
-    olditem.downloads.sort(key=attrgetter('name'), reverse=True)
-    newitem.downloads.sort(key=attrgetter('name'), reverse=True)
+    try:
+        olditem.downloads.sort(key=attrgetter('name'), reverse=True)
+        newitem.downloads.sort(key=attrgetter('name'), reverse=True)
+    catch except TypeError:
+        pass
     
     if len(olditem.downloads) != len(newitem.downloads):
         info('  -> number of game files changed old "{}" -> new "{}"'.format(len(olditem.downloads), len(newitem.downloads)))
@@ -363,9 +366,11 @@ def handle_game_updates(olditem, newitem):
         for i in range(0, len(newitem.downloads)):
             if olditem.downloads[i].name != newitem.downloads[i].name:
                 info('  -> game files updated "{}" -> "{}"'.format(olditem.downloads[i].name, newitem.downloads[i].name))
-                
-    olditem.extras.sort(key=attrgetter('name'), reverse=True)
-    newitem.extras.sort(key=attrgetter('name'), reverse=True)
+    try:
+        olditem.extras.sort(key=attrgetter('name'), reverse=True)
+        newitem.extras.sort(key=attrgetter('name'), reverse=True)
+    catch except TypeError:
+        pass
     
     if len(olditem.extras) != len(newitem.extras):
         info('  -> number of extra files changed old "{}" -> new "{}"'.format(len(olditem.extras), len(newitem.extras)))
