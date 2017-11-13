@@ -353,7 +353,7 @@ def handle_game_updates(olditem, newitem):
     try:
         olditem.downloads.sort(key=attrgetter('name'), reverse=True)
         newitem.downloads.sort(key=attrgetter('name'), reverse=True)
-    catch except TypeError:
+    except TypeError:
         pass
     
     if len(olditem.downloads) != len(newitem.downloads):
@@ -369,7 +369,7 @@ def handle_game_updates(olditem, newitem):
     try:
         olditem.extras.sort(key=attrgetter('name'), reverse=True)
         newitem.extras.sort(key=attrgetter('name'), reverse=True)
-    catch except TypeError:
+    except TypeError:
         pass
     
     if len(olditem.extras) != len(newitem.extras):
